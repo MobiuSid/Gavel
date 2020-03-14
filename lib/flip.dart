@@ -19,35 +19,35 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  final digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,];
-
-  MyHomePage();
+  final colorsList = [Colors.green,Colors.yellow,Colors.red];
+  static StreamController<int> controller = StreamController<int>();
+  final Stream<int> stream = controller.stream;
+  MyHomePage(){
+    controller.add(0);
+  }
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return new Scaffold(
       body: new Center(
-        child: FlipPanel.builder(
+        child: GestureDetector(
+          onTap: () => controller.add(0),
+        onDoubleTap: () => controller.add(1),
+        onLongPress: () => controller.add(2),
+        child: FlipPanel.stream(
+          itemStream: stream,
           itemBuilder: (context, index) => Container(
             alignment: Alignment.center,
-            width: 96.0,
-            height: 128.0,
+            width: size.width * 0.6,
+            height: size.height * 0.6,
             decoration: BoxDecoration(
-              color: Colors.black,
+              color: colorsList[index],
               borderRadius: BorderRadius.all(Radius.circular(4.0)),
             ),
-            child: Text(
-              '${digits[index]}',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 80.0,
-                  color: Colors.yellow),
-            ),
           ),
-          itemsCount: digits.length,
-          period: Duration(milliseconds: 1000),
-          loop: -1,
         ),
+      ),
       ),
     );
   }
