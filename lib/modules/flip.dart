@@ -2,53 +2,29 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'dart:async';
 
-void main() => runApp(new MyApp());
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Flutter Demo',
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: new MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
+class FinalFlipper extends StatelessWidget {
   final colorsList = [Colors.green,Colors.yellow,Colors.red];
-  static StreamController<int> controller = StreamController<int>();
-  final Stream<int> stream = controller.stream;
-  MyHomePage(){
-    controller.add(0);
-  }
-
+  final stream;
+  FinalFlipper({
+    Stream stream
+}): this.stream = stream;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return new Scaffold(
-      body: new Center(
-        child: GestureDetector(
-          onTap: () => controller.add(0),
-        onDoubleTap: () => controller.add(1),
-        onLongPress: () => controller.add(2),
-        child: FlipPanel.stream(
-          itemStream: stream,
-          itemBuilder: (context, index) => Container(
-            alignment: Alignment.center,
-            width: size.width * 0.6,
-            height: size.height * 0.6,
-            decoration: BoxDecoration(
-              color: colorsList[index],
-              borderRadius: BorderRadius.all(Radius.circular(4.0)),
+    return Center(
+          child: FlipPanel.stream(
+            itemStream: stream,
+            itemBuilder: (context, index) => Container(
+              alignment: Alignment.center,
+              width: size.width * 0.6,
+              height: size.height * 0.6,
+              decoration: BoxDecoration(
+                color: colorsList[index],
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
             ),
           ),
-        ),
-      ),
-      ),
     );
   }
 }

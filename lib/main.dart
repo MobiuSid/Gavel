@@ -1,5 +1,10 @@
-import 'package:flutter/material.dart';
 
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:gavel/modules/flip.dart';
+import 'package:gavel/modules/timerModule.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -11,58 +16,83 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.amber,
       ),
-      home: TimerPage(color: Colors.green),
+      home: HomePage(),
     );
   }
 }
 
-class TimerPage extends StatefulWidget {
-  TimerPage({Key key, this.color}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final Color color;
+class HomePage extends StatefulWidget {
+  HomePage();
 
   @override
-  _TimerPageState createState() => _TimerPageState();
+  State<StatefulWidget> createState() => HomePageState();
+
+
 }
-
-class _TimerPageState extends State<TimerPage> {
-  Color color = Colors.green;
-  void _colorChanger() {
+class HomePageState extends State<HomePage>{
+  StreamController controller;
+  int callNumber;
+  void callBack(){
+    if(callNumber == 0) {
+      setState(() {
+        controller.add(0);
+        callNumber++;
+      });
+    }else if(callNumber == 1){setState(() {
+      controller.add(1);
+      callNumber++;
+    });
+    }else{
+      setState(() {
+        controller.add(2);
+        callNumber++;
+      });
+    }
+  }
+  @override
+  void initState() {
+    callNumber = 0;
+    controller = new StreamController<int>();
+    // TODO: implement initState
+    super.initState();
     setState(() {
-      switch(color){
-        case Colors.green:{
-          color = Colors.yellow;
-        }
-        break;
-        case Colors.yellow:{
-          color = Colors.red;
-        }
-        break;
-        case Colors.red:{
-        color = Colors.green;
-      } break;
-
-      }
+      controller.add(0);
     });
   }
-
   @override
   Widget build(BuildContext context) {
+    return Stack(
+        children: [Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.white, Color.fromRGBO(10, 151, 187, 1),Color.fromRGBO(17, 12, 97, 1)],))
+        ),
+          Scaffold(
+              backgroundColor: Colors.transparent,
+              body: SafeArea(child:Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    FinalFlipper(stream: controller.stream),
+                    Padding(
+                        padding: EdgeInsets.only(top: 30 ),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.25 - 29,
+                          child: Padding(
+                            child: TimerModule(callBack),
+                            padding: EdgeInsets.all(20),
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(40)),
+                          ),
+                        ))]
+              )
+              )
+          )
+        ]);
+  }
 
-    return GestureDetector(
-        child: Scaffold(
-      backgroundColor: color,
-    ),
-            onTap: _colorChanger
-    );
-}
+
 }
