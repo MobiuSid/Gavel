@@ -62,7 +62,8 @@ class HomePageState extends State<HomePage>{
   @override
   Widget build(BuildContext context) {
     return Stack(
-        children: [Container(
+        children: [
+          Container(
             decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
