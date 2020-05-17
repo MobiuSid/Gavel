@@ -24,6 +24,7 @@ class TimerModuleState extends State<TimerModule>{
 
   @override
   void initState() {
+    super.initState();
     stopwatch = Stopwatch();
     stopWatchRunning = false;
     secondDuration = Duration(seconds: 1);

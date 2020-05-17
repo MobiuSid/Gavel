@@ -4,56 +4,14 @@ import 'package:gavel/modules/frontPageNav.dart';
 void main() => runApp(TestApp());
 
 class TestApp extends StatefulWidget {
+  // This widget is the root of your application.
   @override
   _TestAppState createState() => _TestAppState();
 }
 
 class _TestAppState extends State<TestApp> {
-  var _index;
-  Tween<Offset> _offsetAnimation;
-  @override
-  void initState(){
-    super.initState();
-    _offsetAnimation = Tween<Offset>(
-    begin: Offset(1,0),
-    end: const Offset(0,0),
-    );
-    _index = 0;
-  }
-   final textSet = [
-     Center(
-         key: ValueKey<int>(0),
-       child: Expanded(
-         child: Container(
-         constraints: BoxConstraints.expand(),
-         color: Colors.red,
-         child: Text("Screen 1"),
-       ),
-       )
-       ),Center(
-         key: ValueKey<int>(1),
-       child: Expanded(
-         child: Container(
-         constraints: BoxConstraints.expand(),
-         color: Colors.green,
-         child: Text("Screen 2"),
-         key: ValueKey<int>(1)         
-       ),
-       )
-       ),Center(
-         key: ValueKey<int>(2),
-       child: Expanded(
-         child: Container(
-         constraints: BoxConstraints.expand(),
-         color: Colors.blue,
-         child: Text("Screen 3"),
-         key: ValueKey<int>(2)         
-       ),
-       )
-       ),
-   ];
-
-
+  var index;
+ 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -85,20 +43,11 @@ class _TestAppState extends State<TestApp> {
     ],
     onTap: (index) {
       //Handle button tap
-      setState(() {
-              this._index = index;
-      });
     },
   ),
-        body:  AnimatedSwitcher(
-            duration: const Duration(milliseconds: 500),
-            transitionBuilder: (Widget child, Animation<double> animation) {
-              return SlideTransition(child: child,
-              position: _offsetAnimation.animate(animation),);
-            },
-            child: textSet[_index],
+        
+      body: Tester()
       ),
-    )
     )
     );
   }
@@ -127,4 +76,3 @@ class _TesterState extends State<Tester> {
       }
     }
 }
-
