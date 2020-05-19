@@ -1,28 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:gavel/modules/event_fragment.dart';
+import 'package:gavel/modules/fragment_handler.dart';
 import 'package:gavel/modules/frontPageNav.dart';
+import 'package:gavel/modules/other_social_media.dart';
 
-void main() => runApp(TestApp());
+void main() => runApp(HomePage());
 
-class TestApp extends StatefulWidget {
+class HomePage extends StatefulWidget {
   // This widget is the root of your application.
   @override
-  _TestAppState createState() => _TestAppState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _TestAppState extends State<TestApp> {
-  var index;
- 
+class _HomePageState extends State<HomePage> {
+  var _index = 0;
+  
+  final widgetSet = [
+    EventsFragment(),
+    Events(),
+    Other()
+  ];
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Testing',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blueGrey,
       ),
       home: SafeArea(
         child: Scaffold(
           bottomNavigationBar: CurvedNavigationBar(
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.cyan.shade500,
     items: <Widget>[
       Text(
       'Meets',
@@ -43,36 +52,17 @@ class _TestAppState extends State<TestApp> {
     ],
     onTap: (index) {
       //Handle button tap
+      setState(() {
+              this._index = index;
+      });
     },
   ),
         
-      body: Tester()
+      body: widgetSet[this._index]
       ),
     )
     );
   }
 }
 
-class Tester extends StatefulWidget{
-  @override
-  _TesterState createState() => _TesterState();
-}
 
-class _TesterState extends State<Tester> {
-  final Widget obj = Container(color: Colors.white);
-
-  @override
-  Widget build(BuildContext context) {
-    return finalWidget(context);  
-    }
-
-    Widget finalWidget(context){
-      if (obj == null){
-        return Center(
-          child: Text('The widget is empty')
-        );
-      } else{
-        return obj;
-      }
-    }
-}

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gavel/modules/fragment_handler.dart';
+
+import 'modules/other_social_media.dart';
 void main() => runApp(Tester());
 
 class Tester extends StatefulWidget{
@@ -11,7 +12,7 @@ class Tester extends StatefulWidget{
 class _TesterState extends State<Tester> {
   final _title = "Tester";
 
-  Widget _test = EventsFragment();
+  Widget _test = Other();
   
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,6 @@ class _TesterState extends State<Tester> {
     return MaterialApp(
       title: _title,
       home: Scaffold(
-        appBar: AppBar(title: Text(_title)),
         body: _test,
       )
     );

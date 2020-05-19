@@ -281,7 +281,7 @@ class CardExpansion extends StatelessWidget {
                     BoxShadow(
                         blurRadius: 8, spreadRadius: 8, color: Colors.black38)
                   ],
-                  color: Colors.white),
+                  color: Colors.blueGrey.shade100),
             )));
   }
 
