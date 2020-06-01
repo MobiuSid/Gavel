@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gavel/timer/timer/main_timer_page.dart';
+import 'package:gavel/timer/timer/report_folder.dart';
 
-import 'modules/other_social_media.dart';
 void main() => runApp(Tester());
 
 class Tester extends StatefulWidget{
@@ -12,7 +13,7 @@ class Tester extends StatefulWidget{
 class _TesterState extends State<Tester> {
   final _title = "Tester";
 
-  Widget _test = Other();
+  Widget _test = TimerList();
   
   @override
   Widget build(BuildContext context) {

@@ -22,6 +22,7 @@ class FinalFlipper extends StatelessWidget {
               decoration: BoxDecoration(
                 color: colorsList[index],
                 borderRadius: BorderRadius.all(Radius.circular(10)),
+                
               ),
             ),
           ),
