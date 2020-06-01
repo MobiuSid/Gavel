@@ -165,7 +165,7 @@ class TimerModuleState extends State<TimerModule>{
 
   }
 bool qualify(){
-if(widget.speaker.overTime < stopwatch.elapsedMilliseconds.toInt() ~/ 1000) return true; else return false;
+if(widget.speaker.overTime > stopwatch.elapsedMilliseconds.toInt() ~/ 1000 && widget.speaker.greenTime < stopwatch.elapsedMilliseconds.toInt() ~/ 1000) return true; else return false;
 }
 
   void secondCallback(){
