@@ -5,6 +5,8 @@ import 'package:gavel/main.dart';
 import 'package:gavel/timer/timer/report_folder.dart';
 import 'dart:math';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../main_navigation_drawer.dart';
 class TimerList extends StatefulWidget{
 
 final _db = Firestore.instance;
@@ -49,7 +51,7 @@ final _db = Firestore.instance;
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(0, 2, 16, 2),
                   child: RaisedButton(onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => Report())
+                    MaterialPageRoute(builder: (context) => MyApp(3))
                     ),
                     child: Text(
                       'Report', style: GoogleFonts.ubuntu(

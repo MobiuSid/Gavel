@@ -3,7 +3,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
-
 class Events extends StatefulWidget {
   final _db = Firestore.instance;
 
@@ -19,28 +18,31 @@ class _EventsFragmentState extends State<Events> {
   void initState() {
     super.initState();
     this._listView = StreamBuilder(
-        stream: widget._db
+        stream: (widget._db
             .collection('events')
             .document('wVTdfor1tLZZGWkfzWHY')
-            .snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            .snapshots()),
+       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           var futureImage;
           if (snapshot.hasError) {
-            futureImage = Text('${snapshot.error}');
-          } else {
+futureImage = Center(
+                    child: CircularProgressIndicator());          } else {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
                 {
-                  futureImage = Text('Waiting');
-                  break;
+  futureImage = Center(
+                    child: CircularProgressIndicator()
+                  );                  break;
                 }
               case ConnectionState.waiting:
                 {
-                  futureImage = Text('Waiting');
-                  break;
+  futureImage = Center(
+                    child: CircularProgressIndicator()
+                  );             break;
                 }
               default:
                 {
+                    print(snapshot.data.data);   
                   snapshot.data.data..forEach((k, v) => _fileList.add(v));
                   print(_fileList);
                   futureImage = ListView.builder(
@@ -104,21 +106,25 @@ class EventCard extends StatelessWidget {
                 switch (snapshot.connectionState) {
                   case ConnectionState.none:
                     {
-                      futureImage = Text('Waiting');
-                      break;
+  futureImage = Center(
+                    child: CircularProgressIndicator()
+                  );                        break;
                     }
                   case ConnectionState.waiting:
                     {
-                      futureImage = Text('Waiting');
-                      break;
+  futureImage = Center(
+                    child: CircularProgressIndicator()
+                  );                        break;
                     }
                   case ConnectionState.active:
                     {
-                      futureImage = Text('Connecting');
-                      break;
+  futureImage = Center(
+                    child: CircularProgressIndicator()
+                  );                        break;
                     }
                   case ConnectionState.done:
                     {
+                      
                       futureImage = ClipRRect(
                           borderRadius: BorderRadius.circular(32.0),
                           child: GestureDetector(
@@ -144,19 +150,32 @@ class EventCard extends StatelessWidget {
   }
 }
 
-class CardExpansion extends StatelessWidget {
-  final _db = Firestore.instance;
-  final _storageReference = FirebaseStorage().ref();
+class CardExpansion extends StatefulWidget {
   final _tag;
   final _address;
-  final _location = 'meeting_details';
 
   CardExpansion(this._tag, this._address);
 
   @override
+  _CardExpansionState createState() => _CardExpansionState();
+}
+
+class _CardExpansionState extends State<CardExpansion> {
+  final _db = Firestore.instance;
+
+  final _storageReference = FirebaseStorage().ref();
+
+  final _location = 'meeting_details';
+
+  final stream = (Firestore.instance
+                                .collection('event_details')
+                                .where('tag', isEqualTo: 'event_pics/1.png')
+                                .snapshots()).asBroadcastStream();
+  @override
   Widget build(BuildContext context) {
     var _size = MediaQuery.of(context).size;
     // TODO: implement build
+    
     return Dialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
@@ -167,7 +186,7 @@ class CardExpansion extends StatelessWidget {
             filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
             child: Container(
               child: Hero(
-                  tag: '${this._tag}',
+                  tag: '${this.widget._tag}',
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 8.0, vertical: 20),
@@ -175,14 +194,12 @@ class CardExpansion extends StatelessWidget {
                       children: <Widget>[
                         ClipRRect(
                           borderRadius: BorderRadius.circular(16),
-                          child: Image.network('${this._address}',
+                          child: Image.network('${this.widget._address}',
                               fit: BoxFit.contain),
                         ),
                         StreamBuilder(
-                            stream: Firestore.instance
-                                .collection('event_details')
-                                .where('tag', isEqualTo: 'event_pics/1.png')
-                                .snapshots(), //replace with _tag
+                          
+                            stream: stream, //replace with _tag
                             builder: (BuildContext context,
                                 AsyncSnapshot<dynamic> snapshot) {
                               var futureWidget;
@@ -192,20 +209,25 @@ class CardExpansion extends StatelessWidget {
                                 switch (snapshot.connectionState) {
                                   case ConnectionState.none:
                                     {
+                                      print(snapshot.connectionState);
                                       futureWidget = Text('Waiting');
                                       break;
                                     }
                                   case ConnectionState.waiting:
-                                    {
+                                    { 
+                                      print(snapshot.connectionState);
                                       futureWidget = Text('Waiting');
                                       break;
                                     }
                                   case ConnectionState.done:
                                     {
-                                      break;
+                                      print(snapshot.connectionState);
+                                       break;
                                     }
                                   default:
                                     {
+                                      print(snapshot.data.documents[0]);
+                                      print(snapshot.connectionState);
                                       var record = Record.fromSnapshot(
                                           snapshot.data.documents[0]);
                                       futureWidget = Padding(
@@ -249,7 +271,9 @@ class CardExpansion extends StatelessWidget {
                         blurRadius: 8, spreadRadius: 8, color: Colors.black38)
                   ],
                   color: Colors.white),
-            )));
+            )
+            )
+            );
   }
 
   Widget iconWidget(Icon icon, String text) {

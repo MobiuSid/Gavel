@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gavel/finalModules/mainPage.dart';
+import 'package:gavel/main_navigation_drawer.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Report extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return MaterialApp(
-      home: Scaffold(
-        body: Stack(
+    return Stack(
           children: [
              Container(
             decoration: BoxDecoration(
@@ -21,15 +21,21 @@ class Report extends StatelessWidget{
         SafeArea(
           child: Padding(
             padding: EdgeInsets.all(8),
-            child: Column(
+            child: Container(
+              child: Column(
               children: [
                 Align(
                   alignment: Alignment.topRight,
-                  child: RaisedButton(onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => HomePage())
-                    ),
+                  child: RaisedButton(onPressed: () {
+                    Firestore.instance.collection('timer').getDocuments().then((snapshot) {
+  for (DocumentSnapshot ds in snapshot.documents){
+    ds.reference.delete();
+  }});
+                    Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => MyApp(0))
+                    );},
                     child: Text(
-                      'Report', style: GoogleFonts.ubuntu(
+                      'Home', style: GoogleFonts.ubuntu(
                         color: Colors.black
                       ),
                     )
@@ -38,6 +44,7 @@ class Report extends StatelessWidget{
                 ),
                 Container(
                   color: Colors.white.withOpacity(0.7),
+                  height: MediaQuery.of(context).size.height - 160,
                   child: ListView(
                     children: [
                       Padding(
@@ -69,10 +76,9 @@ class Report extends StatelessWidget{
               ],
             ),
           ),
-        )
+        ))
           ],
-        )
-      )
+        
     );
   }
   List<Widget> buildList(BuildContext context,List<DocumentSnapshot> snapshots){
@@ -133,11 +139,7 @@ class Report extends StatelessWidget{
         children: buildList(context, snapshot.data.documents.toList())
       );    
       }else{
-        return SliverList(
-          delegate: SliverChildListDelegate(
-            [LinearProgressIndicator()]
-          ),
-        );
+        return LinearProgressIndicator();
       }
 
     },

@@ -26,18 +26,20 @@ class _EventsFragmentState extends State<EventsFragment> {
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           var futureImage;
           if (snapshot.hasError) {
-            futureImage = Text('${snapshot.error}');
-          } else {
+futureImage = Center(
+                    child: CircularProgressIndicator());          } else {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
                 {
-                  futureImage = Text('Waiting');
-                  break;
+  futureImage = Center(
+                    child: CircularProgressIndicator()
+                  );                  break;
                 }
               case ConnectionState.waiting:
                 {
-                  futureImage = Text('Waiting');
-                  break;
+  futureImage = Center(
+                    child: CircularProgressIndicator()
+                  );                  break;
                 }
               default:
                 {
@@ -104,18 +106,21 @@ class EventCard extends StatelessWidget {
                 switch (snapshot.connectionState) {
                   case ConnectionState.none:
                     {
-                      futureImage = Text('Waiting');
-                      break;
+                  futureImage = Center(
+                    child: CircularProgressIndicator()
+                  );                      break;
                     }
                   case ConnectionState.waiting:
                     {
-                      futureImage = Text('Waiting');
-                      break;
+                  futureImage = Center(
+                    child: CircularProgressIndicator()
+                  );                      break;
                     }
                   case ConnectionState.active:
                     {
-                      futureImage = Text('Connecting');
-                      break;
+                  futureImage = Center(
+                    child: CircularProgressIndicator()
+                  );                      break;
                     }
                   case ConnectionState.done:
                     {
@@ -150,7 +155,10 @@ class CardExpansion extends StatelessWidget {
   final _tag;
   final _address;
   final _location = 'meeting_details';
-
+  final stream = Firestore.instance
+                                .collection('meeting_details')
+                                .where('tag', isEqualTo: 'events_pics/1.png')
+                                .snapshots().asBroadcastStream();
   CardExpansion(this._tag, this._address);
 
   @override
@@ -179,10 +187,7 @@ class CardExpansion extends StatelessWidget {
                               fit: BoxFit.contain),
                         ),
                         StreamBuilder(
-                            stream: Firestore.instance
-                                .collection('meeting_details')
-                                .where('tag', isEqualTo: 'events_pics/1.png')
-                                .snapshots(), //replace with _tag
+                          stream:  stream,
                             builder: (BuildContext context,
                                 AsyncSnapshot<dynamic> snapshot) {
                               var futureWidget;

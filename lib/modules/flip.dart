@@ -6,9 +6,7 @@ import 'dart:async';
 class FinalFlipper extends StatelessWidget {
   final colorsList = [Colors.green,Colors.yellow,Colors.red];
   final stream;
-  FinalFlipper({
-    Stream stream
-}): this.stream = stream;
+  FinalFlipper(this.stream);
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -88,11 +86,9 @@ class FlipPanel<T> extends StatefulWidget {
     this.startIndex = 0,
     this.spacing = 0.5,
     this.direction = FlipDirection.down,
-  })  : assert(itemBuilder != null),
-        assert(itemsCount != null),
-        assert(startIndex < itemsCount),
-        assert(period == null ||
-            period.inMilliseconds >= 2 * duration.inMilliseconds),
+  })  : 
+        
+     
         indexedItemBuilder = itemBuilder,
         streamItemBuilder = null,
         itemStream = null,
@@ -109,7 +105,7 @@ class FlipPanel<T> extends StatefulWidget {
     this.duration = const Duration(milliseconds: 500),
     this.spacing = 0.5,
     this.direction = FlipDirection.up,
-  })  : assert(itemStream != null),
+  })  : 
         indexedItemBuilder = null,
         streamItemBuilder = itemBuilder,
         itemsCount = 0,
