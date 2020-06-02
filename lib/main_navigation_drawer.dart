@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gavel/finalModules/mainPage.dart';
 import 'package:gavel/member_progress/member_progress.dart';
 import 'package:gavel/timer/timer/main_timer_page.dart';
-import 'package:gavel/timer/timer/report_folder.dart';
 
 void main() => runApp(MyApp(0));
 
@@ -27,8 +26,7 @@ class MyHomePage extends StatelessWidget {
   final widgetList = [
     HomePage(),
     TimerList(),
-    MemberProgressPage(),
-    Report()
+    MemberProgressPage()
   ];
   @override
   Widget build(BuildContext context) {

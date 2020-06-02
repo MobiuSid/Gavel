@@ -42,7 +42,6 @@ class TimerCardPageState extends State<TimerCardPage>{
   }
   void resetCallBack(){
     callNumber = 0;
-    controller = StreamController();
     controller.add(0);
   }
   @override
@@ -84,7 +83,7 @@ class TimerCardPageState extends State<TimerCardPage>{
                         'Back', style: GoogleFonts.ubuntu(color: Colors.black),
                       ),)),
                     ),
-                    FinalFlipper(controller.stream),
+                    FinalFlipper(stream: controller.stream),
                     SizedBox(height: 20,),
                     Container(
                       decoration: BoxDecoration(
@@ -115,9 +114,7 @@ class TimerCardPageState extends State<TimerCardPage>{
               )
               )
           )
-        ]
-        )
-        );
+        ]));
   }
 
 
