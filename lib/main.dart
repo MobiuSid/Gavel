@@ -9,18 +9,18 @@ import 'package:gavel/modules/timerModule.dart';
 import 'package:gavel/timer/timer/main_timer_page.dart';
 import 'package:gavel/modules/timerModule.dart';
 import 'package:google_fonts/google_fonts.dart';
-class HomePage extends StatefulWidget {
+class TimerCardPage extends StatefulWidget {
   final Speaker speaker;
   final String documentID;
-  HomePage(this.speaker, this.documentID
+  TimerCardPage(this.speaker, this.documentID
   );
 
   @override
-  State<StatefulWidget> createState() => HomePageState();
+  State<StatefulWidget> createState() => TimerCardPageState();
 
 
 }
-class HomePageState extends State<HomePage>{
+class TimerCardPageState extends State<TimerCardPage>{
   StreamController controller;
   int callNumber;
   void callBack(){

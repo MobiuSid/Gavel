@@ -61,7 +61,7 @@ final _db = Firestore.instance;
                 )
               ),
             Container(
-            height: MediaQuery.of(context).size.height - 100,
+            height: MediaQuery.of(context).size.height - 140,
             color: Colors.transparent,
             child: CollapsingList()
             )
@@ -135,7 +135,7 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
               Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => HomePage(
+            builder: (context) => TimerCardPage(
               Speaker.fromSnapshot(e), e.documentID
           ),))
         
